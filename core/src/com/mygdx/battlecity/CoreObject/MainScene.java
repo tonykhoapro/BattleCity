@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.mygdx.battlecity.CoreObject.GameObject.BaseObject;
 import com.mygdx.battlecity.CoreObject.GameObject.BoundObject;
+import com.mygdx.battlecity.CoreObject.GameObject.Enemy;
+import com.mygdx.battlecity.CoreObject.GameObject.Player;
 
 public class MainScene extends Scene {
     private TiledMap map;
@@ -42,8 +44,7 @@ public class MainScene extends Scene {
                     ((RectangleMapObject) object).getRectangle().y + 8));
         }
 
-        BaseObject player = new BaseObject();
-        player.SetPosition(205, 64);
-        Add(player);
+        Add(new Player());
+        Add(new Enemy());
     }
 }

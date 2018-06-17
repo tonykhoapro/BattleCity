@@ -35,7 +35,8 @@ public class HitBox extends Component {
     }
 
     public void SetPosition(float x, float y) {
-        body.setTransform(x / Game.PPM, y / Game.PPM, body.getAngle());
+        pending = new Transform(new Vector2(x, y), body.getAngle());
+        if(!isActive()) body.setTransform(x / Game.PPM, y / Game.PPM, body.getAngle());
     }
 
     public Vector2 GetPosition() {
@@ -99,6 +100,16 @@ public class HitBox extends Component {
     FixtureDef fixtureDef = new FixtureDef();
     PolygonShape shape = new PolygonShape();
     Vector2 halfSize = new Vector2(0, 0);
+
+    public Transform getPending() {
+        return pending;
+    }
+
+    public void setPending(Transform pending) {
+        this.pending = pending;
+    }
+
+    Transform pending = null;
 
     private static WorldSimulator worldSimulator = (WorldSimulator) TickManager.getInstance().FindByType(WorldSimulator.class);
 }

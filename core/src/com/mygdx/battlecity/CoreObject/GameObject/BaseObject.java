@@ -2,6 +2,7 @@ package com.mygdx.battlecity.CoreObject.GameObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.Component;
@@ -9,18 +10,28 @@ import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 import com.mygdx.battlecity.Tickable;
 
-public class BaseObject extends Actor {
+public abstract class BaseObject extends Actor {
+    public enum Direction {
+        Up,
+        Right,
+        Down,
+        Left
+    }
 
-    HitBox hitBox = new HitBox(26, 26, BodyDef.BodyType.DynamicBody);
+    HitBox hitBox = new HitBox(24, 24, BodyDef.BodyType.DynamicBody);
 
-    SpriteComponent normalState = new SpriteComponent("Player1");
+    SpriteComponent normalState;
     SpriteComponent appearingState = new SpriteComponent("Twinkle", 0.06f, true);
     SpriteComponent protectedState = new SpriteComponent("Shield", 0.1f, true);
 
     SpriteComponent currentState = appearingState;
 
     float speed = 120;
-    boolean locked = true;
+
+
+
+    Vector2 respawnPosition = new Vector2();
+    float respawnRotation = 180;
 
     static final float APPEAR_TIME = 1.6f;
     float appearAccumTime = 0;
@@ -29,7 +40,8 @@ public class BaseObject extends Actor {
     float protectedAccumTime = 0;
 
 
-    public BaseObject() {
+    public BaseObject(SpriteComponent spriteComponent) {
+        normalState = spriteComponent;
         AddComponent(hitBox);
         AddComponent(currentState);
     }
@@ -38,14 +50,16 @@ public class BaseObject extends Actor {
     public void OnTick(float dt) {
         super.OnTick(dt);
 
-        if (currentState.getName() == "Player1") {
-            PollInput();
-        } else if (currentState.getName() == "Shield") {
+        if (currentState == normalState) {
+            accum += dt;
+            Update(dt);
+        } else if (currentState == protectedState) {
             OnProtected(dt);
-        } else if (currentState.getName() == "Twinkle") {
+        } else if (currentState == appearingState) {
             OnApperaing(dt);
         }
 
+        //if (!isAlive) Respawn();
     }
 
     void OnProtected(float dt) {
@@ -69,48 +83,59 @@ public class BaseObject extends Actor {
         }
     }
 
-    public void Respawn()
-    {
-        Activate(new Explosion(GetPosition().x, GetPosition().y));
+    abstract void Update(float dt);
 
-        RemoveComponent(currentState);
-        currentState = appearingState;
-        AddComponent(currentState);
-        SetPosition(205, 64);
-        SetRotation(0);
-        hitBox.SetVelocity(0, 0);
+    public void Respawn() {
+        if (currentState == normalState) {
+            Activate(new Explosion(GetPosition().x, GetPosition().y));
+
+            RemoveComponent(currentState);
+            currentState = appearingState;
+            AddComponent(currentState);
+            SetPosition(respawnPosition);
+            SetRotation(respawnRotation);
+            //hitBox.SetVelocity(0, 0);
+        }
     }
 
+    public void Shoot() {
 
-    protected final void PollInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
+        if (accum >= cooldown) {
+            accum = 0;
+            Activate(new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation(), this));
+        }
 
-            Activate(new Bullet(GetPosition().x, GetPosition().y, (int)GetRotation()));
 
+    }
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            hitBox.SetVelocity(-speed, 0);
-            SetRotation(90);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            hitBox.SetVelocity(speed, 0);
-            SetRotation(-90);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+    protected float cooldown = 0.15f;
+    private float accum = 0;
+
+    public void MoveDirection(Direction direction) {
+        if (direction == Direction.Up) {
             hitBox.SetVelocity(0, speed);
             SetRotation(0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        } else if (direction == Direction.Down) {
             hitBox.SetVelocity(0, -speed);
             SetRotation(180);
-        } else {
-            hitBox.SetVelocity(0, 0);
+        } else if (direction == Direction.Left) {
+            hitBox.SetVelocity(-speed, 0);
+            SetRotation(90);
+        } else if (direction == Direction.Right) {
+            hitBox.SetVelocity(speed, 0);
+            SetRotation(-90);
         }
     }
 
 
-    /*@Override
+    @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        Deactivate(other);
-    }*/
-
-
+        if (Bullet.class.isInstance(other)) {
+            Bullet bullet = (Bullet) other;
+            if (bullet.getOwner() != this) {
+                Respawn();
+            }
+        }
+    }
 }

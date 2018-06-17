@@ -43,21 +43,29 @@ public class WorldSimulator extends System implements ContactListener {
         //b2dr.render(world, spriteBatch.getProjectionMatrix());
         world.getBodies(bodyArray);
 
-        for (Body body : bodyArray) {
-            if (body.getType() != BodyDef.BodyType.StaticBody) {
-                HitBox hitBox = (HitBox) body.getUserData();
-                //body.setTransform(hitBox.getActor().GetPosition(), hitBox.getActor().GetRotationInRad());
-                hitBox.SetPosition(hitBox.getActor().GetPosition().x, hitBox.getActor().GetPosition().y);
-            }
-        }
+        //for (Body body : bodyArray) {
+        //    if (body.getType() != BodyDef.BodyType.StaticBody) {
+        //        HitBox hitBox = (HitBox) body.getUserData();
+        //        body.setTransform(hitBox.getActor().GetPosition().x, hitBox.getActor().GetPosition().y, hitBox.getActor().GetRotationInRad());
+        //    }
+        //}
 
         world.step(1 / 60.0f, 12, 4);
 
         for (Body body : bodyArray) {
             if (body.getType() != BodyDef.BodyType.StaticBody) {
                 HitBox hitBox = (HitBox) body.getUserData();
-                hitBox.getActor().SetPosition(body.getPosition().scl(Game.PPM));
-                //body.setTransform(body.getPosition(), hitBox.getActor().GetRotationInRad());
+                if(hitBox.getPending() == null)
+                {
+                    //hitBox.getActor().SetPosition(body.getPosition());
+                    hitBox.getActor().getTransform().setPosition(body.getPosition());
+                }
+                else
+                {
+                    body.setTransform(hitBox.getPending().getPosition(), hitBox.getPending().getRotation());
+                    body.setLinearVelocity(new Vector2(0, 0));
+                    hitBox.setPending(null);
+                }
             }
         }
 

@@ -40,8 +40,6 @@ public class Game extends ApplicationAdapter {
         Tickable.Activate(new RenderSystem(batch));
         Tickable.Activate(new SceneManager(new MainScene()));
 
-        //Tickable.Activate(new BaseObject());
-        //Tickable.Activate(new Enemy());
 
         TickManager.getInstance().BeginTick();
     }
@@ -70,7 +68,7 @@ public class Game extends ApplicationAdapter {
 
     public static Sprite CreateSprite(String regionName) {
         for (TextureRegion textureRegion : textureRegionArray) {
-            if (textureRegion.toString().contains((regionName))) {
+            if (textureRegion.toString().equals(regionName)) {
                 return new Sprite(new TextureRegion(textureRegion));
             }
         }

@@ -11,7 +11,14 @@ public class Bullet extends Actor {
     float speed = 240;
     Vector2 velocity = new Vector2(0, 0);
 
-    public Bullet(float x, float y, int angle) {
+    public BaseObject getOwner() {
+        return owner;
+    }
+
+    BaseObject owner;
+
+    public Bullet(float x, float y, int angle, BaseObject owner) {
+        this.owner = owner;
         AddComponent(hitBox);
         AddComponent(new SpriteComponent("Bullet"));
 
@@ -45,10 +52,17 @@ public class Bullet extends Actor {
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        if (!BaseObject.class.isInstance(other) && !Bullet.class.isInstance(other)) {
-            Deactivate(this);
+        if(other == owner || Bullet.class.isInstance(other)) return;
+
+        if(BrickWall.class.isInstance(other))
+        {
             Deactivate(other);
         }
+        //else if (BaseObject.class.isInstance(other)) {
+        //    BaseObject baseObject = (BaseObject)other;
+        //    baseObject.Respawn();
+        //}
+        Deactivate(this);
     }
 
     @Override
