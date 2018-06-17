@@ -7,7 +7,7 @@ import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 public class Eagle extends Actor {
     public Eagle(){
-        AddComponent(new SpriteComponent("Eagle"));
+        AddComponent(new SpriteComponent("EagleNormal"));
         AddComponent(new HitBox(32, 32, BodyDef.BodyType.StaticBody));
     }
 }

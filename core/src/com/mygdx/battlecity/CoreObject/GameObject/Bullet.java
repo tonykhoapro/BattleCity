@@ -41,7 +41,7 @@ public class Bullet extends Actor {
         hitBox.SetVelocity(velocity.x, velocity.y);
 
     }
-
+    
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
@@ -49,5 +49,11 @@ public class Bullet extends Actor {
             Deactivate(this);
             Deactivate(other);
         }
+    }
+
+    @Override
+    public void OnDeactivate() {
+        super.OnDeactivate();
+        Activate(new Explosion(GetPosition().x, GetPosition().y));
     }
 }
