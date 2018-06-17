@@ -6,8 +6,21 @@ import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 public class Eagle extends Actor {
+    SpriteComponent spriteALive = new SpriteComponent("EagleNormal");
+    SpriteComponent spriteDead = new SpriteComponent("Eagle");
+    HitBox hitBox = new HitBox(32, 32, BodyDef.BodyType.StaticBody);
     public Eagle(){
-        AddComponent(new SpriteComponent("Eagle"));
-        AddComponent(new HitBox(32, 32, BodyDef.BodyType.StaticBody));
+        AddComponent(spriteALive);
+        AddComponent(hitBox);
+    }
+
+    @Override
+    public void OnBeginHit(Actor other) {
+        super.OnBeginHit(other);
+        if (Bullet.class.isInstance(other)) {
+            AddComponent(spriteDead);
+            RemoveComponent(spriteALive);
+            RemoveComponent(hitBox);
+        }
     }
 }

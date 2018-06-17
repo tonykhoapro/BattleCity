@@ -7,14 +7,30 @@ import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 public class Bullet extends Actor {
+
+    public enum BState {
+        fire, // đang bắn
+        explosion, // nổ
+    }
+
+    private BState state = BState.fire;
+
     HitBox hitBox = new HitBox(8, 8, BodyDef.BodyType.DynamicBody, true);
-    float speed = 240;
+    SpriteComponent spriteBullet = new SpriteComponent("Bullet");
+    SpriteComponent AnimationExplosion = new SpriteComponent("Explosion", 0.1f, true);
+
+    float statetime;
+    {
+        statetime = 0;
+    }
+    float angle;
+    float speed = 200;
     Vector2 velocity = new Vector2(0, 0);
 
     public Bullet(float x, float y, int angle) {
         AddComponent(hitBox);
-        AddComponent(new SpriteComponent("Bullet"));
-
+        AddComponent(spriteBullet);
+        this.angle = angle;
         if (angle == 0) {
             velocity.y = speed;
 
@@ -30,24 +46,37 @@ public class Bullet extends Actor {
         } else assert (false);
 
         SetPosition(x, y);
-        SetRotation(angle);
     }
 
 
     @Override
     public void OnActivate() {
         super.OnActivate();
-
         hitBox.SetVelocity(velocity.x, velocity.y);
+        SetRotation(angle);
+    }
 
+    @Override
+    public void OnTick(float dt) {
+        super.OnTick(dt);
+        if(state == BState.explosion)
+            statetime+=dt;
+       if (AnimationExplosion.getAnimation().isAnimationFinished(statetime))
+       {
+           Deactivate(this);
+       }
     }
 
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        if (!BaseObject.class.isInstance(other) && !Bullet.class.isInstance(other)) {
-            Deactivate(this);
-            Deactivate(other);
+        if (BrickWall.class.isInstance(other) || Eagle.class.isInstance(other) || Enemy.class.isInstance(other)) {
+            state = BState.explosion;
+            AddComponent(AnimationExplosion);
+            RemoveComponent(hitBox);
+            RemoveComponent(spriteBullet);
+            if (!Enemy.class.isInstance(other))
+                Deactivate(other);
         }
     }
 }

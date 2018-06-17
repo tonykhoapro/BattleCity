@@ -30,12 +30,14 @@ public class MainScene extends Scene {
                 Add("BrickWallBottomRight").SetPosition(((RectangleMapObject) object).getRectangle().x,
                         ((RectangleMapObject) object).getRectangle().y);
             } else if (type == 4) {
-                Add("Eagle").SetPosition(((RectangleMapObject) object).getRectangle().x,
-                        ((RectangleMapObject) object).getRectangle().y);
+                Add("Eagle").SetPosition(((RectangleMapObject) object).getRectangle().x + 12,
+                        ((RectangleMapObject) object).getRectangle().y + 14);
             }
 
         }
-
-        Add("BaseObject");
+        Add("ItemHelmet");
+        Add("Grenade");
+        Add("Enemy");
+        Add("Player");
     }
 }
