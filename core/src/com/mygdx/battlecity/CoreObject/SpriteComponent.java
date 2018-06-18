@@ -9,6 +9,13 @@ import com.mygdx.battlecity.System.RenderSystem;
 
 public class SpriteComponent extends Component {
 
+    public SpriteComponent(String regionName, int zOder) {
+        name = regionName;
+        animated = false;
+        sprite = Game.CreateSprite(regionName);
+        assert (sprite != null);
+        this.zOrder = zOder;
+    }
     public SpriteComponent(String regionName) {
         name = regionName;
         animated = false;
@@ -81,12 +88,23 @@ public class SpriteComponent extends Component {
         return name;
     }
 
+    public int getzOrder() {
+        return zOrder;
+    }
+
+    public void setzOrder(int zOrder) {
+        this.zOrder = zOrder;
+        renderSystem.RemoveSprite(this);
+        renderSystem.AddSprite(this);
+    }
+
     private Sprite sprite;
     private boolean animated;
     private Animation<Sprite> animation;
     private Vector2 offset = new Vector2(0, 0);
 
 
+    private int zOrder = 0;
     private String name;
 
     private static RenderSystem renderSystem = (RenderSystem) TickManager.getInstance().FindByType(RenderSystem.class);

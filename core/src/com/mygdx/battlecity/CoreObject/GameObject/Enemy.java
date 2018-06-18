@@ -7,7 +7,7 @@ import com.mygdx.battlecity.Game;
 
 import java.util.Random;
 
-public class Enemy extends BaseObject {
+public class Enemy extends Tank {
 
     public Enemy() {
         super(new SpriteComponent("ArmorTank", 0.15f, true));

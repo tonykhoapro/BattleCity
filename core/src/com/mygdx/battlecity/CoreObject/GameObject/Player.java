@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 import com.mygdx.battlecity.Game;
 
-public class Player extends BaseObject {
+public class Player extends Tank {
 
     public Player() {
         super(new SpriteComponent("Player4"));

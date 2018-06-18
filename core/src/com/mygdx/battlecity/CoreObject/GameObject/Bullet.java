@@ -12,13 +12,13 @@ public class Bullet extends Actor {
     float speed = 700 / Game.PPM;
     Vector2 velocity = new Vector2(0, 0);
 
-    public BaseObject getOwner() {
+    public Tank getOwner() {
         return owner;
     }
 
-    BaseObject owner;
+    Tank owner;
 
-    public Bullet(float x, float y, int angle, BaseObject owner) {
+    public Bullet(float x, float y, int angle, Tank owner) {
         this.owner = owner;
         AddComponent(hitBox);
         AddComponent(new SpriteComponent("Bullet"));
@@ -58,8 +58,8 @@ public class Bullet extends Actor {
         if (BrickWall.class.isInstance(other)) {
             Deactivate(other);
         }
-        //else if (BaseObject.class.isInstance(other)) {
-        //    BaseObject baseObject = (BaseObject)other;
+        //else if (Tank.class.isInstance(other)) {
+        //    Tank baseObject = (Tank)other;
         //    baseObject.Respawn();
         //}
         Deactivate(this);

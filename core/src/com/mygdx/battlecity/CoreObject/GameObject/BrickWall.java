@@ -11,6 +11,8 @@ public class BrickWall extends Actor {
         AddComponent(new HitBox(8 / Game.PPM, 8 / Game.PPM, BodyDef.BodyType.StaticBody));
     }
 
+    int z = -10;
+
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);

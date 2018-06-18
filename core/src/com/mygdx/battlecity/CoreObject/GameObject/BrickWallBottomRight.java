@@ -6,6 +6,6 @@ import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 public class BrickWallBottomRight extends BrickWall {
     public BrickWallBottomRight() {
-        AddComponent(new SpriteComponent("BrickWallBottomRight"));
+        AddComponent(new SpriteComponent("BrickWallBottomRight", z));
     }
 }
