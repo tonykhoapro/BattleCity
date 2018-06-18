@@ -8,6 +8,7 @@ import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.Component;
 import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
+import com.mygdx.battlecity.Game;
 import com.mygdx.battlecity.Tickable;
 
 public abstract class BaseObject extends Actor {
@@ -18,7 +19,7 @@ public abstract class BaseObject extends Actor {
         Left
     }
 
-    HitBox hitBox = new HitBox(24, 24, BodyDef.BodyType.DynamicBody);
+    HitBox hitBox = new HitBox(24 / Game.PPM, 24 / Game.PPM, BodyDef.BodyType.DynamicBody);
 
     SpriteComponent normalState;
     SpriteComponent appearingState = new SpriteComponent("Twinkle", 0.06f, true);
@@ -26,12 +27,11 @@ public abstract class BaseObject extends Actor {
 
     SpriteComponent currentState = appearingState;
 
-    float speed = 120;
+    float speed = 120 / Game.PPM;
 
 
-
-    Vector2 respawnPosition = new Vector2();
-    float respawnRotation = 180;
+    Vector2 respawnPosition = new Vector2(0, 0);
+    float respawnRotation = 0;
 
     static final float APPEAR_TIME = 1.6f;
     float appearAccumTime = 0;
@@ -42,8 +42,14 @@ public abstract class BaseObject extends Actor {
 
     public BaseObject(SpriteComponent spriteComponent) {
         normalState = spriteComponent;
-        AddComponent(hitBox);
+        //AddComponent(hitBox);
         AddComponent(currentState);
+    }
+
+    @Override
+    public void OnActivate() {
+        super.OnActivate();
+        Respawn();
     }
 
     @Override
@@ -80,6 +86,8 @@ public abstract class BaseObject extends Actor {
             currentState = protectedState;
             AddComponent(currentState);
             AddComponent(normalState);
+
+            AddComponent(hitBox);
         }
     }
 
@@ -92,9 +100,11 @@ public abstract class BaseObject extends Actor {
             RemoveComponent(currentState);
             currentState = appearingState;
             AddComponent(currentState);
-            SetPosition(respawnPosition);
+            SetPosition(respawnPosition.x, respawnPosition.y);
             SetRotation(respawnRotation);
-            //hitBox.SetVelocity(0, 0);
+
+            RemoveComponent(hitBox);
+
         }
     }
 

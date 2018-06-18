@@ -5,10 +5,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
+import com.mygdx.battlecity.Game;
 
 public class Bullet extends Actor {
-    HitBox hitBox = new HitBox(8, 8, BodyDef.BodyType.DynamicBody, true);
-    float speed = 240;
+    HitBox hitBox = new HitBox(8 / Game.PPM, 8 / Game.PPM, BodyDef.BodyType.DynamicBody, true);
+    float speed = 700 / Game.PPM;
     Vector2 velocity = new Vector2(0, 0);
 
     public BaseObject getOwner() {
