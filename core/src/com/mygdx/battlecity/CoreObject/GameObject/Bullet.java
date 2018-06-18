@@ -46,7 +46,7 @@ public class Bullet extends Actor {
         super.OnActivate();
 
         hitBox.SetVelocity(velocity.x, velocity.y);
-
+        SetRotation(angle);
     }
 
     @Override
