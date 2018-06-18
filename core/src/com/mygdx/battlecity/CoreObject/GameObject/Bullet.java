@@ -10,6 +10,7 @@ public class Bullet extends Actor {
     HitBox hitBox = new HitBox(8, 8, BodyDef.BodyType.DynamicBody, true);
     float speed = 240;
     Vector2 velocity = new Vector2(0, 0);
+    float angle = 0;
 
     public Tank getOwner() {
         return owner;
@@ -21,7 +22,7 @@ public class Bullet extends Actor {
         this.owner = owner;
         AddComponent(hitBox);
         AddComponent(new SpriteComponent("Bullet"));
-
+        this.angle = angle;
         if (angle == 0) {
             velocity.y = speed;
 
@@ -37,7 +38,6 @@ public class Bullet extends Actor {
         } else assert (false);
 
         SetPosition(x, y);
-        SetRotation(angle);
     }
 
 
