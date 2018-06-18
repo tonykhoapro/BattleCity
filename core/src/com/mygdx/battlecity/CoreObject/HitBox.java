@@ -8,18 +8,24 @@ import com.mygdx.battlecity.TickManager;
 
 public class HitBox extends Component {
     public HitBox(float width, float height, BodyDef.BodyType bodyType) {
-        Init(width, height, bodyType, false, false);
+        Init(width, height, bodyType, false, false, (short)-1);
     }
 
+
+
     public HitBox(float width, float height, BodyDef.BodyType bodyType, boolean isSensor) {
-        Init(width, height, bodyType, isSensor, false);
+        Init(width, height, bodyType, isSensor, false, (short)-1);
     }
 
     public HitBox(float width, float height, BodyDef.BodyType bodyType, boolean isSensor, boolean isBullet) {
-        Init(width, height, bodyType, isSensor, isBullet);
+        Init(width, height, bodyType, isSensor, isBullet, (short)-1);
     }
 
-    private void Init(float width, float height, BodyDef.BodyType bodyType, boolean isSensor, boolean isBullet) {
+    public HitBox(float width, float height, BodyDef.BodyType bodyType, boolean isSensor, boolean isBullet, int maskBits) {
+        Init(width, height, bodyType, isSensor, isBullet, (short)maskBits);
+    }
+
+    private void Init(float width, float height, BodyDef.BodyType bodyType, boolean isSensor, boolean isBullet, short maskBits) {
         halfSize.set(width / 2 , height / 2);
 
         bodyDef.type = bodyType;
@@ -27,6 +33,7 @@ public class HitBox extends Component {
 
         shape.setAsBox(halfSize.x, halfSize.y);
 
+        fixtureDef.filter.maskBits = maskBits;
         fixtureDef.shape = shape;
         fixtureDef.density = 0;
         fixtureDef.restitution = 0.005f;

@@ -8,21 +8,31 @@ import com.mygdx.battlecity.CoreObject.SpriteComponent;
 import com.mygdx.battlecity.Game;
 
 public class Bullet extends Actor {
-    HitBox hitBox = new HitBox(16 / Game.PPM, 16 / Game.PPM, BodyDef.BodyType.DynamicBody, true);
-    float speed = 700 / Game.PPM;
+    HitBox hitBox = new HitBox(16 / Game.PPM, 16 / Game.PPM, BodyDef.BodyType.DynamicBody, true, true);
+    float speed = 400 / Game.PPM;
     Vector2 velocity = new Vector2(0, 0);
 
-    public BaseObject getOwner() {
+    public Tank getOwner() {
         return owner;
     }
 
-    BaseObject owner;
+    Tank owner;
+    float angle = 0;
 
-    public Bullet(float x, float y, int angle, BaseObject owner) {
+    public Bullet(float x, float y, int angle, Tank owner) {
+        Init(x, y, angle, owner, speed);
+    }
+
+    public Bullet(float x, float y, int angle, Tank owner, float speed) {
+        Init(x, y, angle, owner, speed);
+    }
+
+    private void Init(float x, float y, int angle, Tank owner, float speed) {
+        this.speed = speed;
         this.owner = owner;
         AddComponent(hitBox);
         AddComponent(new SpriteComponent("Bullet"));
-
+        this.angle = angle;
         if (angle == 0) {
             velocity.y = speed;
 
@@ -38,31 +48,32 @@ public class Bullet extends Actor {
         } else assert (false);
 
         SetPosition(x, y);
-        SetRotation(angle);
     }
-
 
     @Override
     public void OnActivate() {
         super.OnActivate();
 
         hitBox.SetVelocity(velocity.x, velocity.y);
-
+        SetRotation(angle);
     }
 
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        if (other == owner || Bullet.class.isInstance(other)) return;
-
-        if (BrickWall.class.isInstance(other)) {
-            Deactivate(other);
+        if (other == owner) return;
+        if (Bullet.class.isInstance(other)) {
+            if (((Bullet) other).getOwner() != getOwner()) setAlive(false);
+        } else if (other instanceof Brick ||
+                other instanceof Tank ||
+                Bound.class.isInstance(other) ||
+                Steel.class.isInstance(other)) {
+            setAlive(false);
         }
-        //else if (BaseObject.class.isInstance(other)) {
-        //    BaseObject baseObject = (BaseObject)other;
-        //    baseObject.Respawn();
+        //else if (BrickWall.class.isInstance(other)) {
+        //    Deactivate(other);
         //}
-        Deactivate(this);
+        //if (!Water.class.isInstance(other) && !Item.class.isInstance(other)) Deactivate(this);
     }
 
     @Override

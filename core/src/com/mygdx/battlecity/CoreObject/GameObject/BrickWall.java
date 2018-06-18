@@ -11,11 +11,14 @@ public class BrickWall extends Actor {
         AddComponent(new HitBox(8 / Game.PPM, 8 / Game.PPM, BodyDef.BodyType.StaticBody));
     }
 
+    protected int z = -10;
+
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        if (BrickWall.class.isInstance(other)) {
-            Deactivate(this);
+        if (Bullet.class.isInstance(other)) {
+            //Deactivate(this);
+            setAlive(false);
         }
     }
 }

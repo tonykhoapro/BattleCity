@@ -9,7 +9,7 @@ public class Explosion extends Actor {
 
     public Explosion(float x, float y) {
         SetPosition(x, y);
-        AddComponent(new SpriteComponent("Explosion", 0.05f, true));
+        AddComponent(new SpriteComponent("Explosion", 0.04f, true));
     }
 
     @Override

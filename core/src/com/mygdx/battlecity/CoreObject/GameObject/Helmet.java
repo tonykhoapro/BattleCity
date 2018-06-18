@@ -5,15 +5,14 @@ import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 import java.util.Random;
 
-public class Grenade extends Item {
-    public Grenade(){
-        animationItem = new SpriteComponent("Grenade");
+public class Helmet extends Item {
+    public Helmet() {
+        animationItem = new SpriteComponent("Helmet");
         AddComponent(animationItem);
         AddComponent(hitBox);
 //        Random ran = new Random();
 //
-//        SetPosition(ran.nextInt(500), ran.nextInt(500));
+//        SetPosition(ran.nextInt(500) / 16, ran.nextInt(500)/ 16);
     }
-
-
 }
+

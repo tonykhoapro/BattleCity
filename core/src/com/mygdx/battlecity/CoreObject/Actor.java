@@ -122,6 +122,8 @@ public abstract class Actor extends Tickable {
             component.Deattach();
         }
         destroyComponents.clear();
+
+        if (!this.isAlive()) Deactivate(this);
     }
 
     @Override
@@ -152,6 +154,15 @@ public abstract class Actor extends Tickable {
         this.scene = scene;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    private boolean alive = true;
     private Scene scene;
     private HashSet<Component> componentList = new HashSet<Component>();
     private HashSet<Component> destroyComponents = new HashSet<Component>();
