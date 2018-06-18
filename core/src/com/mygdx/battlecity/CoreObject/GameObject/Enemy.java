@@ -1,16 +1,11 @@
 package com.mygdx.battlecity.CoreObject.GameObject;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.mygdx.battlecity.CoreObject.Actor;
-import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 import java.util.Random;
 
-public class Enemy extends BaseObject {
+public class Enemy extends Tank {
 
     public Enemy() {
         super(new SpriteComponent("ArmorTank", 0.15f, true));

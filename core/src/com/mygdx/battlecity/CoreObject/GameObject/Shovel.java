@@ -5,9 +5,9 @@ import com.mygdx.battlecity.CoreObject.SpriteComponent;
 
 import java.util.Random;
 
-public class Grenade extends Item {
-    public Grenade(){
-        animationItem = new SpriteComponent("Grenade");
+public class Shovel extends Item{
+    public Shovel(){
+        animationItem = new SpriteComponent("Shovel");
         AddComponent(animationItem);
         AddComponent(hitBox);
         Random ran = new Random();
@@ -16,4 +16,5 @@ public class Grenade extends Item {
     }
 
 
+    
 }

@@ -4,10 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.mygdx.battlecity.CoreObject.GameObject.BaseObject;
-import com.mygdx.battlecity.CoreObject.GameObject.BoundObject;
-import com.mygdx.battlecity.CoreObject.GameObject.Enemy;
-import com.mygdx.battlecity.CoreObject.GameObject.Player;
+import com.mygdx.battlecity.CoreObject.GameObject.*;
 
 public class MainScene extends Scene {
     private TiledMap map;
@@ -46,5 +43,6 @@ public class MainScene extends Scene {
 
         Add(new Player());
         Add(new Enemy());
+        Add(new Spawner());
     }
 }

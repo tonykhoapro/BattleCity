@@ -10,7 +10,7 @@ import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 import com.mygdx.battlecity.Tickable;
 
-public abstract class BaseObject extends Actor {
+public abstract class Tank extends Actor {
     public enum Direction {
         Up,
         Right,
@@ -40,7 +40,7 @@ public abstract class BaseObject extends Actor {
     float protectedAccumTime = 0;
 
 
-    public BaseObject(SpriteComponent spriteComponent) {
+    public Tank(SpriteComponent spriteComponent) {
         normalState = spriteComponent;
         AddComponent(hitBox);
         AddComponent(currentState);
