@@ -37,10 +37,10 @@ public class Brick extends MapObject {
     @Override
     public void OnTick(float dt) {
         super.OnTick(dt);
-        if(!isAlive())
-        {
-            Deactivate(this);
-        }
+        //if(!isAlive())
+        //{
+        //    Deactivate(this);
+        //}
     }
 
     @Override

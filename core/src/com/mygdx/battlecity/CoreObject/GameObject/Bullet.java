@@ -9,7 +9,7 @@ import com.mygdx.battlecity.Game;
 
 public class Bullet extends Actor {
     HitBox hitBox = new HitBox(16 / Game.PPM, 16 / Game.PPM, BodyDef.BodyType.DynamicBody, true, true);
-    float speed = 500 / Game.PPM;
+    float speed = 400 / Game.PPM;
     Vector2 velocity = new Vector2(0, 0);
 
     public Tank getOwner() {
@@ -50,7 +50,6 @@ public class Bullet extends Actor {
         SetPosition(x, y);
     }
 
-
     @Override
     public void OnActivate() {
         super.OnActivate();
@@ -62,12 +61,19 @@ public class Bullet extends Actor {
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
-        if (other == owner || Bullet.class.isInstance(other)) return;
-
-        if (BrickWall.class.isInstance(other)) {
-            Deactivate(other);
+        if (other == owner) return;
+        if (Bullet.class.isInstance(other)) {
+            if (((Bullet) other).getOwner() != getOwner()) setAlive(false);
+        } else if (other instanceof Brick ||
+                other instanceof Tank ||
+                Bound.class.isInstance(other) ||
+                Steel.class.isInstance(other)) {
+            setAlive(false);
         }
-        if(!Water.class.isInstance(other) && !Item.class.isInstance(other)) Deactivate(this);
+        //else if (BrickWall.class.isInstance(other)) {
+        //    Deactivate(other);
+        //}
+        //if (!Water.class.isInstance(other) && !Item.class.isInstance(other)) Deactivate(this);
     }
 
     @Override

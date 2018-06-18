@@ -27,8 +27,8 @@ public abstract class Tank extends Actor {
 
     SpriteComponent currentState = appearingState;
 
-    float speed = 120 / Game.PPM;
-    float speedbullet = 300 / Game.PPM;
+    float speed = 140 / Game.PPM;
+    float speedbullet = 400 / Game.PPM;
 
     Vector2 respawnPosition = new Vector2(0, 0);
     float respawnRotation = 0;
@@ -103,22 +103,18 @@ public abstract class Tank extends Actor {
             SetPosition(respawnPosition.x, respawnPosition.y);
             SetRotation(respawnRotation);
             RemoveComponent(hitBox);
-
         }
     }
 
     public void Shoot() {
-
         if (accum >= cooldown) {
             accum = 0;
-            Activate(new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation(),this, speedbullet));
+            Activate(new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation(), this, speedbullet));
         }
-
-
     }
 
-    protected float cooldown = 0.15f;
-    private float accum = 0;
+    protected float cooldown = 0.25f;
+    protected float accum = 0;
 
     public void MoveDirection(Direction direction) {
         if (direction == Direction.Up) {

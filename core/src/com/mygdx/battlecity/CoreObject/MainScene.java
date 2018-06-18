@@ -22,7 +22,7 @@ public class MainScene extends Scene {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             float x = rect.x + 4;
-            float y = rect.y + 4;
+            float y = rect.y + 12;
             x /= Game.PPM;
             y /= Game.PPM;
 
@@ -65,7 +65,7 @@ public class MainScene extends Scene {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             float x = rect.x + 8;
-            float y = rect.y;
+            float y = rect.y + 8;
             x /= Game.PPM;
             y /= Game.PPM;
 
@@ -77,19 +77,43 @@ public class MainScene extends Scene {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             float x = rect.x + 8;
-            float y = rect.y;
+            float y = rect.y + 8;
             x /= Game.PPM;
             y /= Game.PPM;
 
             Add(new Water(x, y));
         }
 
+        for (MapObject object : map.getLayers().get("SteelWall").getObjects().getByType(RectangleMapObject.class)) {
+
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            float x = rect.x + 8;
+            float y = rect.y + 8;
+            x /= Game.PPM;
+            y /= Game.PPM;
+
+            Add(new Steel(x, y));
+        }
+
+        for (MapObject object : map.getLayers().get("Spawner").getObjects().getByType(RectangleMapObject.class)) {
+
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            float x = rect.x + 16;
+            float y = rect.y + 16;
+            x /= Game.PPM;
+            y /= Game.PPM;
+
+            Add(new BasicTank(x, y));
+        }
+
 
         Add(new Player());
-        Add(new BasicTank(10, 20));
-        Add(new ArmorTank(30, 20));
-        Add(new FastTank(50, 20));
-        Add(new PowerTank(60, 20));
+        //Add(new BasicTank(10, 20));
+        //Add(new ArmorTank(30, 20));
+        //Add(new FastTank(50, 20));
+        //Add(new PowerTank(60, 20));
         Add(new Spawner());
     }
 }

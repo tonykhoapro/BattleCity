@@ -122,6 +122,8 @@ public abstract class Actor extends Tickable {
             component.Deattach();
         }
         destroyComponents.clear();
+
+        if (!this.isAlive()) Deactivate(this);
     }
 
     @Override
