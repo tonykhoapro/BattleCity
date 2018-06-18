@@ -27,7 +27,14 @@ public class Bullet extends Actor {
     float speed = 200;
     Vector2 velocity = new Vector2(0, 0);
 
-    public Bullet(float x, float y, int angle) {
+    public BaseObject getOwner() {
+        return owner;
+    }
+
+    BaseObject owner;
+
+    public Bullet(float x, float y, int angle, BaseObject owner) {
+        this.owner = owner;
         AddComponent(hitBox);
         AddComponent(spriteBullet);
         this.angle = angle;
@@ -70,6 +77,7 @@ public class Bullet extends Actor {
     @Override
     public void OnBeginHit(Actor other) {
         super.OnBeginHit(other);
+<<<<<<< HEAD
         if (BrickWall.class.isInstance(other) || Eagle.class.isInstance(other) || Enemy.class.isInstance(other)) {
             state = BState.explosion;
             AddComponent(AnimationExplosion);
@@ -77,6 +85,24 @@ public class Bullet extends Actor {
             RemoveComponent(spriteBullet);
             if (!Enemy.class.isInstance(other))
                 Deactivate(other);
+=======
+        if(other == owner || Bullet.class.isInstance(other)) return;
+
+        if(BrickWall.class.isInstance(other))
+        {
+            Deactivate(other);
+>>>>>>> origin/master
         }
+        //else if (BaseObject.class.isInstance(other)) {
+        //    BaseObject baseObject = (BaseObject)other;
+        //    baseObject.Respawn();
+        //}
+        Deactivate(this);
+    }
+
+    @Override
+    public void OnDeactivate() {
+        super.OnDeactivate();
+        Activate(new Explosion(GetPosition().x, GetPosition().y));
     }
 }

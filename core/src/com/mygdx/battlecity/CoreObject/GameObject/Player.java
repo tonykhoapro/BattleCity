@@ -2,6 +2,7 @@ package com.mygdx.battlecity.CoreObject.GameObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+<<<<<<< HEAD
 import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
 import com.mygdx.battlecity.Tickable;
@@ -61,10 +62,43 @@ public class Player extends BaseObject{
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             hitBox.SetVelocity(0, -speed);
             SetRotation(180);
+=======
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.battlecity.CoreObject.SpriteComponent;
+
+public class Player extends BaseObject {
+
+    public Player() {
+        super(new SpriteComponent("Player4"));
+        respawnRotation = 0;
+        SetPosition(205, 64);
+        respawnPosition = new Vector2(205, 64);
+    }
+
+    @Override
+    void Update(float dt) {
+        PollInput();
+    }
+
+    protected final void PollInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
+            Shoot();
+            //Activate(new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation()));
+
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            MoveDirection(Direction.Left);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            MoveDirection(Direction.Right);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            MoveDirection(Direction.Up);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            MoveDirection(Direction.Down);
+>>>>>>> origin/master
         } else {
             hitBox.SetVelocity(0, 0);
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void ChangeState(TState state, float dt) {
@@ -136,4 +170,6 @@ public class Player extends BaseObject{
             hitBox.SetVelocity(0, 0);
         }
     }
+=======
+>>>>>>> origin/master
 }

@@ -10,6 +10,7 @@ public class Eagle extends Actor {
     SpriteComponent spriteDead = new SpriteComponent("Eagle");
     HitBox hitBox = new HitBox(32, 32, BodyDef.BodyType.StaticBody);
     public Eagle(){
+<<<<<<< HEAD
         AddComponent(spriteALive);
         AddComponent(hitBox);
     }
@@ -22,5 +23,9 @@ public class Eagle extends Actor {
             RemoveComponent(spriteALive);
             RemoveComponent(hitBox);
         }
+=======
+        AddComponent(new SpriteComponent("EagleNormal"));
+        AddComponent(new HitBox(32, 32, BodyDef.BodyType.StaticBody));
+>>>>>>> origin/master
     }
 }

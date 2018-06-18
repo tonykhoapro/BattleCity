@@ -24,6 +24,10 @@ public abstract class Actor extends Tickable {
 
     public final void SetPosition(Vector2 position) {
         transform.setPosition(position);
+        HitBox h = (HitBox) GetComponent(HitBox.class);
+        if (h != null) {
+            if (h.isActive()) h.SetPosition(position.x, position.y);
+        }
     }
 
     public final void SetPosition(float x, float y) {
@@ -36,6 +40,15 @@ public abstract class Actor extends Tickable {
 
     public final void SetRotation(double rotation) {
         transform.setRotation((float) rotation);
+    }
+
+    public Object GetComponent(Class<?> cls) {
+        for (Component com : componentList) {
+            if (cls.isInstance(com)) {
+                return com;
+            }
+        }
+        return null;
     }
 
     // Class phải có default constructor.
@@ -142,5 +155,10 @@ public abstract class Actor extends Tickable {
     private Scene scene;
     private HashSet<Component> componentList = new HashSet<Component>();
     private HashSet<Component> destroyComponents = new HashSet<Component>();
+
+    public Transform getTransform() {
+        return transform;
+    }
+
     private Transform transform = new Transform(new Vector2(100.0f, 100.0f), 0);
 }

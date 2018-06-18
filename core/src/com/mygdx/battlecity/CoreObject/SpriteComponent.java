@@ -10,15 +10,17 @@ import com.mygdx.battlecity.System.RenderSystem;
 public class SpriteComponent extends Component {
 
     public SpriteComponent(String regionName) {
+        name = regionName;
         animated = false;
         sprite = Game.CreateSprite(regionName);
         assert (sprite != null);
     }
 
     public SpriteComponent(String animationName, float frameDuration, boolean looped) {
+        name = animationName;
         animated = true;
 
-        animation = new Animation<Sprite>(frameDuration,
+        animation = new Animation<>(frameDuration,
                 Game.CreateSprites(animationName),
                 looped ? Animation.PlayMode.LOOP : Animation.PlayMode.NORMAL);
 
@@ -74,10 +76,18 @@ public class SpriteComponent extends Component {
         this.offset = offset;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private Sprite sprite;
     private boolean animated;
     private Animation<Sprite> animation;
     private Vector2 offset = new Vector2(0, 0);
+
+
+
+    private String name;
 
     private static RenderSystem renderSystem = (RenderSystem) TickManager.getInstance().FindByType(RenderSystem.class);
 }
