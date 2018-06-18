@@ -21,7 +21,7 @@ public class Game extends ApplicationAdapter {
     private static TextureAtlas textureAtlas;
     private static Array<TextureRegion> textureRegionArray;
 
-    public static int WIDTH = 512;
+    public static int WIDTH = 1280;
     public static int HEIGHT = 512;
 
     public static float PPM = 1;

@@ -17,7 +17,7 @@ public abstract class BaseObject extends Actor {
         Down,
         Left
     }
-
+    Bullet bullet = null;
     HitBox hitBox = new HitBox(24, 24, BodyDef.BodyType.DynamicBody);
 
     SpriteComponent normalState;
@@ -102,7 +102,10 @@ public abstract class BaseObject extends Actor {
 
         if (accum >= cooldown) {
             accum = 0;
-            Activate(new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation(), this));
+            if (bullet == null) {
+                bullet = new Bullet(GetPosition().x, GetPosition().y, (int) GetRotation(), this);
+            }
+            Activate(bullet);
         }
 
 
