@@ -4,10 +4,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
+import com.mygdx.battlecity.Game;
 
 public class Eagle extends Actor {
-    public Eagle(){
+    public Eagle() {
         AddComponent(new SpriteComponent("EagleNormal"));
-        AddComponent(new HitBox(32, 32, BodyDef.BodyType.StaticBody));
+        AddComponent(new HitBox(32 / Game.PPM, 32 / Game.PPM, BodyDef.BodyType.StaticBody));
     }
 }

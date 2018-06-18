@@ -22,7 +22,7 @@ public abstract class Actor extends Tickable {
         return transform.getRotation();
     }
 
-    public final void SetPosition(Vector2 position) {
+    private final void SetPosition(Vector2 position) {
         transform.setPosition(position);
         HitBox h = (HitBox) GetComponent(HitBox.class);
         if (h != null) {
@@ -160,5 +160,5 @@ public abstract class Actor extends Tickable {
         return transform;
     }
 
-    private Transform transform = new Transform(new Vector2(100.0f, 100.0f), 0);
+    private Transform transform = new Transform(new Vector2(0, 0), 0);
 }

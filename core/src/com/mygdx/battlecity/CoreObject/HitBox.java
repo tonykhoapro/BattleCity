@@ -20,7 +20,7 @@ public class HitBox extends Component {
     }
 
     private void Init(float width, float height, BodyDef.BodyType bodyType, boolean isSensor, boolean isBullet) {
-        halfSize.set(width / 2, height / 2);
+        halfSize.set(width / 2 , height / 2);
 
         bodyDef.type = bodyType;
         bodyDef.bullet = isBullet;
@@ -36,11 +36,11 @@ public class HitBox extends Component {
 
     public void SetPosition(float x, float y) {
         pending = new Transform(new Vector2(x, y), body.getAngle());
-        if(!isActive()) body.setTransform(x / Game.PPM, y / Game.PPM, body.getAngle());
+        if (!isActive()) body.setTransform(x, y , body.getAngle());
     }
 
     public Vector2 GetPosition() {
-        return body.getTransform().getPosition().cpy().scl(Game.PPM);
+        return body.getTransform().getPosition().cpy();
     }
 
     @Override
@@ -88,11 +88,11 @@ public class HitBox extends Component {
     }
 
     public void SetVelocity(float x, float y) {
-        body.setLinearVelocity(x / Game.PPM, y / Game.PPM);
+        body.setLinearVelocity(x , y );
     }
 
     public Vector2 GetVelocity() {
-        return body.getLinearVelocity().cpy().scl(Game.PPM);
+        return body.getLinearVelocity().cpy();
     }
 
     private Body body;

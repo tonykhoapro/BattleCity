@@ -2,9 +2,7 @@ package com.mygdx.battlecity;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,19 +19,30 @@ public class Game extends ApplicationAdapter {
     private static TextureAtlas textureAtlas;
     private static Array<TextureRegion> textureRegionArray;
 
+    public static int CAMERA_WIDTH = 32;
+    public static int CAMERA_HEIGHT ;
+    private static Camera camera;
+
     public static int WIDTH = 512;
     public static int HEIGHT = 512;
 
-    public static float PPM = 1;
+    public static float PPM = 16;
 
     private FPSLogger fpsLogger = new FPSLogger();
 
     @Override
     public void create() {
         batch = new SpriteBatch();
+
+        CAMERA_HEIGHT = (Gdx.graphics.getHeight() / Gdx.graphics.getWidth()) * CAMERA_WIDTH;
+        camera = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
+        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+
         img = new Texture("sprite.bmp");
         textureAtlas = new TextureAtlas("Atlas/BattleCityAtlas.atlas");
         textureRegionArray = new Array<TextureRegion>(textureAtlas.getRegions());
+
 
 
         Tickable.Activate(new WorldSimulator(batch));
@@ -48,6 +57,8 @@ public class Game extends ApplicationAdapter {
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
@@ -69,7 +80,10 @@ public class Game extends ApplicationAdapter {
     public static Sprite CreateSprite(String regionName) {
         for (TextureRegion textureRegion : textureRegionArray) {
             if (textureRegion.toString().equals(regionName)) {
-                return new Sprite(new TextureRegion(textureRegion));
+                Sprite s = new Sprite(new TextureRegion(textureRegion));
+                s.setSize(s.getWidth() / Game.PPM, s.getHeight() / Game.PPM);
+                s.setOrigin(s.getWidth() / 2, s.getHeight() / 2);
+                return s;
             }
         }
         return null;
@@ -80,7 +94,10 @@ public class Game extends ApplicationAdapter {
 
         for (TextureRegion textureRegion : textureRegionArray) {
             if (textureRegion.toString().contains((keyName))) {
-                sprites.add(new Sprite(new TextureRegion(textureRegion)));
+                Sprite s = new Sprite(new TextureRegion(textureRegion));
+                s.setSize(s.getWidth() / Game.PPM, s.getHeight() / Game.PPM);
+                s.setOrigin(s.getWidth() / 2, s.getHeight() / 2);
+                sprites.add(s);
             }
         }
 

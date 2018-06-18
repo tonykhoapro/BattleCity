@@ -1,12 +1,9 @@
 package com.mygdx.battlecity.CoreObject.GameObject;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.mygdx.battlecity.CoreObject.Actor;
-import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
+import com.mygdx.battlecity.Game;
 
 import java.util.Random;
 
@@ -14,13 +11,13 @@ public class Enemy extends BaseObject {
 
     public Enemy() {
         super(new SpriteComponent("ArmorTank", 0.15f, true));
-        SetPosition(250, 385);
-        respawnPosition = new Vector2(250, 385);
+        SetPosition(250 / Game.PPM, 385/ Game.PPM);
+        respawnPosition = new Vector2(250/ Game.PPM, 385/ Game.PPM);
     }
 
     @Override
     void Update(float dt) {
-        Shoot();
+        //Shoot();
 
 
         if ((moveTime += dt) >= changeDirTime) {
@@ -43,10 +40,6 @@ public class Enemy extends BaseObject {
         }
     }
 
-    /*@Override
-    public void OnPreHit(Actor other) {
-        Tickable.Deactivate(other);
-    }*/
 
     private float changeDirTime = 0.5f;
     private float moveTime = 0;

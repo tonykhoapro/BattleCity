@@ -52,11 +52,12 @@ public class SpriteComponent extends Component {
 
     public final void setSprite(Sprite sprite) {
         this.sprite = sprite;
+
     }
 
     public void ResetDrawPositionAndRotation() {
-        sprite.setPosition(getActor().GetPosition().x + offset.x - sprite.getWidth() / 2,
-                getActor().GetPosition().y + offset.y - sprite.getHeight() / 2);
+        sprite.setPosition(getActor().GetPosition().x + offset.x - sprite.getWidth() * 0.5f,
+                getActor().GetPosition().y + offset.y - sprite.getHeight() * 0.5f);
         sprite.setRotation(getActor().GetRotation());
     }
 
@@ -84,7 +85,6 @@ public class SpriteComponent extends Component {
     private boolean animated;
     private Animation<Sprite> animation;
     private Vector2 offset = new Vector2(0, 0);
-
 
 
     private String name;
