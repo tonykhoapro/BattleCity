@@ -1,23 +1,21 @@
 package com.mygdx.battlecity.CoreObject.GameObject;
 
-
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
-import com.mygdx.battlecity.Game;
 
 import java.util.Random;
 
-public class Enemy extends BaseObject {
+public class Enemy extends Tank {
 
     public Enemy() {
         super(new SpriteComponent("ArmorTank", 0.15f, true));
-        SetPosition(250 / Game.PPM, 385/ Game.PPM);
-        respawnPosition = new Vector2(250/ Game.PPM, 385/ Game.PPM);
+        SetPosition(250, 385);
+        respawnPosition = new Vector2(250, 385);
     }
 
     @Override
     void Update(float dt) {
-        //Shoot();
+        Shoot();
 
 
         if ((moveTime += dt) >= changeDirTime) {
@@ -40,6 +38,10 @@ public class Enemy extends BaseObject {
         }
     }
 
+    /*@Override
+    public void OnPreHit(Actor other) {
+        Tickable.Deactivate(other);
+    }*/
 
     private float changeDirTime = 0.5f;
     private float moveTime = 0;

@@ -43,15 +43,25 @@ public class WorldSimulator extends System implements ContactListener {
         //b2dr.render(world, spriteBatch.getProjectionMatrix());
         world.getBodies(bodyArray);
 
-        world.step(1 / 60.0f, 8, 4);
+        //for (Body body : bodyArray) {
+        //    if (body.getType() != BodyDef.BodyType.StaticBody) {
+        //        HitBox hitBox = (HitBox) body.getUserData();
+        //        body.setTransform(hitBox.getActor().GetPosition().x, hitBox.getActor().GetPosition().y, hitBox.getActor().GetRotationInRad());
+        //    }
+        //}
+
+        world.step(1 / 60.0f, 12, 4);
 
         for (Body body : bodyArray) {
             if (body.getType() != BodyDef.BodyType.StaticBody) {
                 HitBox hitBox = (HitBox) body.getUserData();
-                if (hitBox.getPending() == null) {
+                if(hitBox.getPending() == null)
+                {
                     //hitBox.getActor().SetPosition(body.getPosition());
                     hitBox.getActor().getTransform().setPosition(body.getPosition());
-                } else {
+                }
+                else
+                {
                     body.setTransform(hitBox.getPending().getPosition(), hitBox.getPending().getRotation());
                     body.setLinearVelocity(new Vector2(0, 0));
                     hitBox.setPending(null);
@@ -66,7 +76,6 @@ public class WorldSimulator extends System implements ContactListener {
     }
 
     public void AddHitBoxToWorld(HitBox hitBox) {
-
         hitBox.setBody(world.createBody(hitBox.getBodyDef()));
         hitBox.getBody().createFixture(hitBox.getFixtureDef());
         hitBox.getBody().setUserData(hitBox);

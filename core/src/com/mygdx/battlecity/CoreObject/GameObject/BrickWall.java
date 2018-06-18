@@ -4,11 +4,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.battlecity.CoreObject.Actor;
 import com.mygdx.battlecity.CoreObject.HitBox;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
-import com.mygdx.battlecity.Game;
 
 public class BrickWall extends Actor {
     public BrickWall() {
-        AddComponent(new HitBox(8 / Game.PPM, 8 / Game.PPM, BodyDef.BodyType.StaticBody));
+
     }
 
     @Override

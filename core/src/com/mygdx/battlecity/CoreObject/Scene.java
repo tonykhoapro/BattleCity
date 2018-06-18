@@ -64,10 +64,6 @@ public abstract class Scene {
         actorHashSet.remove(actor);
     }
 
-    public HashSet<Actor> getActorHashSet() {
-        return actorHashSet;
-    }
-
     private HashSet<Actor> actorHashSet = new HashSet<Actor>();
 }
 

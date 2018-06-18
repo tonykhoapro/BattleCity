@@ -2,7 +2,6 @@ package com.mygdx.battlecity.System;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
-import com.mygdx.battlecity.Game;
 
 import java.util.HashSet;
 
@@ -34,7 +33,6 @@ public final class RenderSystem extends System {
             }
 
             sprite.ResetDrawPositionAndRotation();
-
 
             sprite.getSprite().draw(spriteBatch);
         }

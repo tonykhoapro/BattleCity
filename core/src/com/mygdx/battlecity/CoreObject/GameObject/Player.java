@@ -4,15 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.battlecity.CoreObject.SpriteComponent;
-import com.mygdx.battlecity.Game;
 
-public class Player extends BaseObject {
+public class Player extends Tank {
 
     public Player() {
         super(new SpriteComponent("Player4"));
-        SetPosition(205 / Game.PPM, 64 / Game.PPM);
-        respawnPosition = new Vector2(205 / Game.PPM, 64 / Game.PPM);
         respawnRotation = 0;
+        SetPosition(205, 64);
+        respawnPosition = new Vector2(205, 64);
     }
 
     @Override
