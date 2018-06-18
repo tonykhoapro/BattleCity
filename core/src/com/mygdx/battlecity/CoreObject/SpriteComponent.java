@@ -20,7 +20,7 @@ public class SpriteComponent extends Component {
         name = animationName;
         animated = true;
 
-        animation = new Animation<Sprite>(frameDuration,
+        animation = new Animation<>(frameDuration,
                 Game.CreateSprites(animationName),
                 looped ? Animation.PlayMode.LOOP : Animation.PlayMode.NORMAL);
 
