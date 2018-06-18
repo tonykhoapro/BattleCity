@@ -11,7 +11,7 @@ public class FastTank extends Enemy {
         changeDirTimeFactor = 0.2f;
         speedbullet = speedbullet * 1.75f;
         cooldownFactor = 0.9f;
-        speed = speed * 16;
+        speed = speed * 5;
         respawnPosition = new Vector2(x, y);
         SetPosition(respawnPosition.x, respawnPosition.y);
     }
