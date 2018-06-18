@@ -5,9 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.battlecity.CoreObject.GameObject.BoundObject;
-import com.mygdx.battlecity.CoreObject.GameObject.Enemy;
-import com.mygdx.battlecity.CoreObject.GameObject.Player;
+import com.mygdx.battlecity.CoreObject.GameObject.*;
 import com.mygdx.battlecity.Game;
 
 public class MainScene extends Scene {
@@ -17,10 +15,9 @@ public class MainScene extends Scene {
     public MainScene() {
 
         maploader = new TmxMapLoader();
-        map = maploader.load("battlecity.tmx");
+        map = maploader.load("Battle_City.tmx");
 
-        for (MapObject object : map.getLayers().get("Objects").getObjects().getByType(RectangleMapObject.class)) {
-            int type = (Integer) object.getProperties().get("Type");
+        for (MapObject object : map.getLayers().get("BrickWall").getObjects().getByType(RectangleMapObject.class)) {
 
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -29,22 +26,29 @@ public class MainScene extends Scene {
             x /= Game.PPM;
             y /= Game.PPM;
 
-            if (type == 0) {
-                Add("BrickWallTopLeft").SetPosition(x, y);
-            } else if (type == 1) {
-                Add("BrickWallTopRight").SetPosition(x, y);
-            } else if (type == 2) {
-                Add("BrickWallBottomLeft").SetPosition(x, y);
-            } else if (type == 3) {
-                Add("BrickWallBottomRight").SetPosition(x, y);
-            }
+            Add(new Brick(x, y, Brick.Type.TopLeft));
+            Add(new Brick(x, y, Brick.Type.TopRight));
+            Add(new Brick(x, y, Brick.Type.BottomLeft));
+            Add(new Brick(x, y, Brick.Type.BottomRight));
+
+            //if (type == 0) {
+            //    Add("BrickWallTopLeft").SetPosition(x, y);
+            //} else if (type == 1) {
+            //    Add("BrickWallTopRight").SetPosition(x, y);
+            //} else if (type == 2) {
+            //    Add("BrickWallBottomLeft").SetPosition(x, y);
+            //} else if (type == 3) {
+            //    Add("BrickWallBottomRight").SetPosition(x, y);
+            //}
+
+
             //else if (type == 4) {
             //    Add("Eagle").SetPosition(((RectangleMapObject) object).getRectangle().x + 16,
             //            ((RectangleMapObject) object).getRectangle().y + 16);
             //}
         }
 
-        for (MapObject object : map.getLayers().get("Bounds").getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get("Bound").getObjects().getByType(RectangleMapObject.class)) {
 
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -53,12 +57,35 @@ public class MainScene extends Scene {
             x /= Game.PPM;
             y /= Game.PPM;
 
-            Add(new BoundObject(x, y));
+            Add(new Bound(x, y));
+        }
 
+        for (MapObject object : map.getLayers().get("Tree").getObjects().getByType(RectangleMapObject.class)) {
+
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            float x = rect.x + 8;
+            float y = rect.y;
+            x /= Game.PPM;
+            y /= Game.PPM;
+
+            Add("Tree").SetPosition(x, y);
+        }
+
+        for (MapObject object : map.getLayers().get("Water").getObjects().getByType(RectangleMapObject.class)) {
+
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            float x = rect.x + 8;
+            float y = rect.y;
+            x /= Game.PPM;
+            y /= Game.PPM;
+
+            Add(new Water(x, y));
         }
 
 
         Add(new Player());
-        Add(new Enemy());
+        //Add(new Enemy());
     }
 }

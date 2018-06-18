@@ -15,16 +15,13 @@ import com.mygdx.battlecity.System.WorldSimulator;
 
 public class Game extends ApplicationAdapter {
     private SpriteBatch batch;
-    private static Texture img;
     private static TextureAtlas textureAtlas;
     private static Array<TextureRegion> textureRegionArray;
 
-    public static int CAMERA_WIDTH = 32;
-    public static int CAMERA_HEIGHT ;
     private static Camera camera;
 
-    public static int WIDTH = 512;
-    public static int HEIGHT = 512;
+    public static int WIDTH = 1280;
+    public static int HEIGHT = 720;
 
     public static float PPM = 16;
 
@@ -34,15 +31,16 @@ public class Game extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
 
-        CAMERA_HEIGHT = (Gdx.graphics.getHeight() / Gdx.graphics.getWidth()) * CAMERA_WIDTH;
+        int CAMERA_WIDTH = WIDTH / 16;
+        int CAMERA_HEIGHT = HEIGHT / 16;
+
         camera = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
-        img = new Texture("sprite.bmp");
+
         textureAtlas = new TextureAtlas("Atlas/BattleCityAtlas.atlas");
         textureRegionArray = new Array<TextureRegion>(textureAtlas.getRegions());
-
 
 
         Tickable.Activate(new WorldSimulator(batch));
@@ -73,7 +71,6 @@ public class Game extends ApplicationAdapter {
     public void dispose() {
         TickManager.getInstance().EndTick();
         batch.dispose();
-        img.dispose();
         textureAtlas.dispose();
     }
 

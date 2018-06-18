@@ -11,7 +11,8 @@ public class Player extends Tank {
     public Player() {
         super(new SpriteComponent("Player4"));
         SetPosition(205 / Game.PPM, 64 / Game.PPM);
-        respawnPosition = new Vector2(205 / Game.PPM, 64 / Game.PPM);
+        //SetPosition(205 / Game.PPM, 64 / Game.PPM);
+        respawnPosition = new Vector2(GetPosition());
         respawnRotation = 0;
     }
 

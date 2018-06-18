@@ -11,8 +11,8 @@ public class Enemy extends Tank {
 
     public Enemy() {
         super(new SpriteComponent("ArmorTank", 0.15f, true));
-        SetPosition(250 / Game.PPM, 385/ Game.PPM);
-        respawnPosition = new Vector2(250/ Game.PPM, 385/ Game.PPM);
+        SetPosition(250 / Game.PPM, 385 / Game.PPM);
+        respawnPosition = new Vector2(250 / Game.PPM, 385 / Game.PPM);
     }
 
     @Override
