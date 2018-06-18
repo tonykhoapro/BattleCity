@@ -86,6 +86,10 @@ public class MainScene extends Scene {
 
 
         Add(new Player());
-        //Add(new Enemy());
+        Add(new BasicTank(10, 20));
+        Add(new ArmorTank(30, 20));
+        Add(new FastTank(50, 20));
+        Add(new PowerTank(60, 20));
+        Add(new Spawner());
     }
 }

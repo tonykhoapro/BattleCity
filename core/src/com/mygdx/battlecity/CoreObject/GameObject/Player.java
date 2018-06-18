@@ -9,10 +9,9 @@ import com.mygdx.battlecity.Game;
 public class Player extends Tank {
 
     public Player() {
-        super(new SpriteComponent("Player4"));
+        super(new SpriteComponent("Player1"));
         SetPosition(205 / Game.PPM, 64 / Game.PPM);
-        //SetPosition(205 / Game.PPM, 64 / Game.PPM);
-        respawnPosition = new Vector2(GetPosition());
+        respawnPosition = new Vector2(205 / Game.PPM, 64 / Game.PPM);
         respawnRotation = 0;
     }
 

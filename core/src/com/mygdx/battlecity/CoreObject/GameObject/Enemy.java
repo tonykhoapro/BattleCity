@@ -9,24 +9,17 @@ import java.util.Random;
 
 public class Enemy extends Tank {
 
-    public Enemy() {
-        super(new SpriteComponent("ArmorTank", 0.15f, true));
-        SetPosition(250 / Game.PPM, 385 / Game.PPM);
-        respawnPosition = new Vector2(250 / Game.PPM, 385 / Game.PPM);
+    public Enemy(SpriteComponent spriteComponent) {
+        super(spriteComponent);
     }
 
     @Override
     void Update(float dt) {
-        //Shoot();
-
-
+        Shoot();
         if ((moveTime += dt) >= changeDirTime) {
             moveTime = 0;
 
             Random random = new Random();
-
-            //changeDirTime = (float) random.nextInt(12 - 3) + 3 / 20.0f;
-
             int randomNum = random.nextInt(4);
             if (randomNum == 0) {
                 MoveDirection(Direction.Left);
@@ -40,7 +33,35 @@ public class Enemy extends Tank {
         }
     }
 
+    @Override
+    public void Respawn() {
+        if (currentState == normalState) {
+            HP --;
+            Activate(new Explosion(GetPosition().x, GetPosition().y));
 
+            if (HP <= 0){
+                Deactivate(this);
+                RandomTank();
+
+            }
+        }
+    }
+
+    private void RandomTank(){
+        Random random = new Random();
+        int randomNum = random.nextInt(4);
+        if (randomNum == 0) {
+            Activate(new ArmorTank(respawnPosition.x, respawnPosition.y));
+        } else if (randomNum == 1) {
+            Activate(new BasicTank(respawnPosition.x, respawnPosition.y));
+        } else if (randomNum == 2) {
+            Activate(new FastTank(respawnPosition.x, respawnPosition.y));
+        } else if (randomNum == 3) {
+            Activate(new PowerTank(respawnPosition.x, respawnPosition.y));
+        }
+
+    }
+    protected int HP;
     private float changeDirTime = 0.5f;
     private float moveTime = 0;
 }

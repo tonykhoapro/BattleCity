@@ -67,7 +67,7 @@ public class Bullet extends Actor {
         if (BrickWall.class.isInstance(other)) {
             Deactivate(other);
         }
-        if(!Water.class.isInstance(other)) Deactivate(this);
+        if(!Water.class.isInstance(other) && !Item.class.isInstance(other)) Deactivate(this);
     }
 
     @Override
